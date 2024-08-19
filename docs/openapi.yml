@@ -1,0 +1,197 @@
+openapi: 3.0.0
+info:
+  title: TODO App API
+  description: A API for managing TODO tasks.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /api/v1/tasks:
+    get:
+      summary: Get all tasks
+      responses:
+        '200':
+          description: A list of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        title:
+                          type: string
+                          example: '金魚に餌をあげる'
+                        description:
+                          type: string
+                          example: '明日の9時にオフィスの金魚に餌をあげる'
+                        isDone:
+                          type: boolean
+                          example: false
+                    - type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 2
+                        title:
+                          type: string
+                          example: 'ミーティング資料印刷'
+                        description:
+                          type: string
+                          example: 'たかしとのミーティングまでにスライドを印刷する'
+                        isDone:
+                          type: boolean
+                          example: true
+    post:
+      summary: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: 'ミーティング資料作成'
+                description:
+                  type: string
+                  example: 'たかしとのミーティングまでにスライドを作成する'
+      responses:
+        '201':
+          description: Task created. `isDone` of created task must be false.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 2
+                  title:
+                    type: string
+                    example: 'ミーティング資料作成'
+                  description:
+                    type: string
+                    example: 'たかしとのミーティングまでにスライドを作成する'
+                  isDone:
+                    type: boolean
+                    example: false
+
+  /api/v1/tasks/{id}:
+    get:
+      summary: Get a task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  title:
+                    type: string
+                    example: '金魚に餌をあげる'
+                  description:
+                    type: string
+                    example: '明日の9時にオフィスの金魚に餌をあげる'
+                  isDone:
+                    type: boolean
+                    example: false
+        '404':
+          description: Task not found
+
+    put:
+      summary: Update a task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: 'ミーティング資料印刷'
+                description:
+                  type: string
+                  example: 'たかしとのミーティングまでにスライドを印刷する'
+                isDone:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 2
+                  title:
+                    type: string
+                    example: 'ミーティング資料印刷'
+                  description:
+                    type: string
+                    example: 'たかしとのミーティングまでにスライドを印刷する'
+                  isDone:
+                    type: boolean
+                    example: true
+        '404':
+          description: Task not found
+
+    delete:
+      summary: Delete a task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Task deleted
+        '404':
+          description: Task not found
+
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        title:
+          type: string
+          example: '金魚に餌をあげる'
+        description:
+          type: string
+          example: '明日の9時にオフィスの金魚に餌をあげる'
+        isDone:
+          type: boolean
+          example: false
