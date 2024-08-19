@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      DATABASE_URL: 'file:/app/prisma/dev.db'
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: todoapp
+    ports:
+      - '3306:3306'
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
