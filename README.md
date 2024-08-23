@@ -8,6 +8,10 @@
 
 ## docker によるサーバーの起動
 
+.envファイルにてsqliteの設定をしてください
+
+`DATABASE_URL="file:./dev.db"`
+
 ターミナル上で下記コマンドを実行しイメージをビルドしてください。
 
 `docker build -t todo-app:latest .`
