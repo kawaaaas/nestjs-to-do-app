@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Task } from './tasks';
+import { Task } from './task.entity';
 
 @Injectable()
 export class TasksService {
@@ -55,7 +55,7 @@ export class TasksService {
     createdAt: Date;
   }): Task {
     return {
-      id: task.id.toString(),
+      id: task.id,
       title: task.title,
       description: task.description,
       isDone: task.isDone,

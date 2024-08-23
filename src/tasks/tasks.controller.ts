@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from './tasks';
+import { Task } from './task.entity';
 
 @Controller('api/v1/tasks')
 export class TasksController {
